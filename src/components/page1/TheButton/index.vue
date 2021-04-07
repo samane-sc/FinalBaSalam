@@ -1,6 +1,6 @@
 <template>
 <div>
-    <button v-for="tab in tabs" :key="tab" @click=" currentTab = tab.componentName " 
+    <button v-for="tab in tabs" :key="tab.index" @click=" currentTab = tab.componentName " 
     :class= "['button', { active : currentTab === tab.componentName }]">
         <p>
             {{tab.btnName}}
