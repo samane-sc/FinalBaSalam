@@ -1,13 +1,9 @@
 <template>
 <div>
-    <button>
-        <p :class= "{ basketStyle: item0 }" @click="checkClickA()">
-            سبد خرید
-        </p>
-    </button>
-    <button>
-        <p :class= "{ basketStyle : item1 }" @click="checkClickB()">
-            لیست خرید بعدی
+    <button v-for="tab in tabs" :key="tab" @click=" currentTab = tab.componentName " 
+    :class= "['button', { active : currentTab === tab.componentName }]">
+        <p>
+            {{tab.btnName}}
         </p>
     </button>
     <keep-alive>
@@ -23,29 +19,23 @@ import Empty from '../empty'
 export default {
     data() {
         return{
-            currentTab : TheVendor,
-            // changing style while clicking
-            item0 : true,
-            item1 : false,
+            currentTab : "TheVendor",
+            tabs : [
+                {
+                    btnName : "سبد خرید",
+                    componentName : "TheVendor"
+                },
+                {
+                    btnName : "لیست خرید بعدی",
+                    componentName : "Empty"
+                }
+            ],
         }
     },
     components:{
         TheVendor,
         Empty
     },
-    methods : {
-        checkClickA() {
-            this.item0 = !this.item0;
-            this.item1 = !this.item1;
-            this.currentTab = TheVendor;
-            
-        },
-        checkClickB(){
-            this.item1 = !this.item1;
-            this.item0 = !this.item0;
-            this.currentTab = Empty
-        }
-    }
 }
 </script>
 
@@ -79,7 +69,7 @@ p {
     font-family: iransans;
 }
 
-.basketStyle{
+button.active {
     border-bottom: 2px #DF3856 solid; 
     color: #DF3856;
 }
