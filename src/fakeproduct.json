@@ -1,0 +1,51 @@
+{
+    "vendors" : [
+        {
+
+            "fullName" : "مینو همگام",
+            "cityName" : " سعادت شهر",
+            "vendorName" : " خوشمزه‌های خاتون  ",
+            "profileImg" : "https://s16.picofile.com/file/8429278218/Ellipse_4.png",
+            "freesending" : true,
+            "freesendmsg" : false,
+            "discountcode" : true,
+            "products" : [
+                {
+                    "id" : 1,
+                    "name" : "سوسیس آلمانی پنیری",
+                    "price" : 75000,
+                    "price2" : 85000,
+                    "img" : "https://s16.picofile.com/file/8429278542/image_1.png"
+                },
+                {
+                    "id" : 2,
+                    "name" : "کالباس پسته",
+                    "price" : 15000,
+                    "price2" : 35000,
+                    "img" : "https://s16.picofile.com/file/8429278576/image_2.png"
+                }
+            ]
+        },
+        {
+
+            "fullName" : "سارا خوش‌دل",
+            "cityName" : " بوشهر",
+            "vendorName" : " محصولات غذایی ولیک ",
+            "profileImg" : "https://s16.picofile.com/file/8429278526/Ellipse_5.png",
+            "freesending" :false,
+            "freesendmsg" : true,
+            "discountcode" : false,
+            "products" : [
+                {
+                    "id" : 1,
+                    "name" : "سوسیس آلمانی پنیری",
+                    "price" : 61500,
+                    "price2" : 85000,
+                    "img" : "https://s16.picofile.com/file/8429278542/image_1.png"
+                }
+            ]
+            
+        }
+
+    ]
+}
