@@ -1,7 +1,7 @@
 <template>
 <div>
     <!--enter discount code button-->
-    <button>
+    <button v-show="showcode">
         <div class="disFlex">
             <img src="@/assets/photoes/Vector (1).png" width="25px" height="17.25px">
             <div class="discountcode">ثبت کد تخفیف غرفه </div> 
@@ -12,7 +12,9 @@
 
 <script>
 export default {
-
+    props:[
+        "showcode"
+    ]
 }
 </script>
 

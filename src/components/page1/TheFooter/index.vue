@@ -35,6 +35,7 @@
 export default ({
     computed:{
         NumVendors (){
+            // get the number of vendors
             return this.$store.getters.vendorNumber;
         }
     }

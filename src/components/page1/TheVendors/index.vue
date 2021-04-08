@@ -3,12 +3,12 @@
 <!--name of vendors-->
 <div class="header">
     <div v-for="(item, indx) in items.vendors" :key="indx">
-        <div v-show="dltVendor">
+        <div v-show="item.products.length">
             <div class="disFlex vendorName">
                 <span class="infoA">از غرفه: </span>
                 <span class="infoB">{{ item.vendorName }}</span>
             </div>
-            <!-- name of user -->
+            <!-- the name of user -->
             <div class="disFlex" style="margin-right: 15.9px;">
                 <img :src="item.profileImg" width="40" height="40" class="bioImg">
                 <div class="disFlex disFlexCol">
@@ -19,21 +19,21 @@
                     </div>
                 </div>
             </div>
-            <!-- assign to products of each vendor -->
-            <Product v-for="(data, id) in item.products" :key="id"
+            <!-- show the products of each vendor -->
+            <Product v-for="(data, index) in item.products" :key="index"
                 :product-name="data.name" 
                 :new-price="data.price"
                 :crossed-price="data.price2"
                 :product-img="data.img" 
-                @dlt-event = "dltFunction" />
+                @dlt-event = "item.products.splice(index, 1)" />
 
-            <!-- assign to messages after each vendor -->
-            <Msg :msg1="item.freesending" :msg2="item.freesendmsg"/>
+            <!-- show the messages (ارسال رایگان) after each vendor -->
+            <Msg :msg-vendor1="msgVendor1[indx]" :msg-vendor2="msgVendor2[indx]" />
 
-            <!-- assign to discount code link in the botton of each vendor -->
-            <DiscountCode v-if="item.discountcode" />
+            <!-- show the discount code (ثبت کد تخفیف) link in the botton of each vendor -->
+            <DiscountCode :showcode="discountcode[indx]"/>
 
-            <!-- assign to footer of each vendor -->
+            <!-- show the footer (قیمت کل هر غرفه) of each vendor and send the number of products-->
             <VendorsFooter :pro-num="item.products.length" />
         </div>
     </div>
@@ -58,9 +58,20 @@ export default {
     data(){
         return{
             items : fakeproduct, 
-            dltVendor : true
+            
+            //show  "هورا! ارسال از این غرفه برای شما رایگان شد" for the first Vendor which the vlue is true, and hide for the second one which th value is false
+            msgVendor1 : [true, false],
+            
+            //show  "برای ارسال رایگان : ۴۵۰۰۰ تومان دیگه ازین غرفه خرید کنید" for the second Vendor which the vlue is true, and hide for the first one which th value is false
+            msgVendor2 : [false, true],
+            
+            //show "ثبت کد نخفیف" for the first vendor which the vlue is true, and hide for the second one which th value is false
+            discountcode : [true, false]
         }
     },
+    // mounted(){
+    //     console.log(this.message);
+    // },
     methods:{
         dltFunction(){
             

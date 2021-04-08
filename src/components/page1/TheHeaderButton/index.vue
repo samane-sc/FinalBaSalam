@@ -1,11 +1,18 @@
+<!-- this component is for the shopping basket and next shopping list -->
 <template>
 <div>
-    <button v-for="tab in tabs" :key="tab.index" @click=" currentTab = tab.componentName " 
-    :class= "['button', { active : currentTab === tab.componentName }]">
-        <p>
-            {{tab.btnName}}
-        </p>
-    </button>
+    <!-- using  "<component :is >"   to define which button is clicked and if the button is clicked , 
+        the css class which named "active" is bind to that particular button to change the colour and border to pink -->
+    <div class="HeaderBtn">
+        <button v-for="tab in tabs" :key="tab.index" @click=" currentTab = tab.componentName " 
+        :class= "['button', { active : currentTab === tab.componentName }]">
+            <p>
+                <!-- write the name of button -->
+                {{tab.btnName}}    
+             </p>
+        </button>
+    </div>
+    <!-- using "<keep alive>" to keep the "counter" of each product while changing between shopping-basket(سبد خرید) and next-shopping-list(ليست خريد بعدی) -->
     <keep-alive>
         <component :is="currentTab" > </component>
     </keep-alive>
@@ -13,12 +20,13 @@
 </template>
 
 <script>
-import TheVendor from '../TheVendors';
-import Empty from '../empty'
+import TheVendor from '@/components/page1/TheVendors';
+import Empty from '@/components/page1/NextShoppingList'
 
 export default {
     data() {
         return{
+            // the default button is "shopping-list (ليست خريد)"
             currentTab : "TheVendor",
             tabs : [
                 {
@@ -40,7 +48,7 @@ export default {
 </script>
 
 <style scoped>
-div {
+.HeaderBtn {
     display: flex; 
     align-items: center; 
     justify-content: center; 
@@ -53,10 +61,7 @@ button {
     height: 40px;  
     line-height: 36px;
     background-color: #ffffff; 
-    border-top: #ffffff; 
-    border-left: #ffffff; 
-    border-right: #ffffff; 
-    border-bottom: #ffffff;
+    border: none;
     outline: none;
     cursor: pointer;
 }
@@ -69,6 +74,7 @@ p {
     font-family: iransans;
 }
 
+/* the style for the button which is clicked */
 button.active {
     border-bottom: 2px #DF3856 solid; 
     color: #DF3856;

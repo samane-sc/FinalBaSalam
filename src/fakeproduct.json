@@ -6,9 +6,6 @@
             "cityName" : " سعادت شهر",
             "vendorName" : " خوشمزه‌های خاتون  ",
             "profileImg" : "https://s16.picofile.com/file/8429278218/Ellipse_4.png",
-            "freesending" : true,
-            "freesendmsg" : false,
-            "discountcode" : true,
             "products" : [
                 {
                     "id" : 1,
@@ -32,9 +29,6 @@
             "cityName" : " بوشهر",
             "vendorName" : " محصولات غذایی ولیک ",
             "profileImg" : "https://s16.picofile.com/file/8429278526/Ellipse_5.png",
-            "freesending" :false,
-            "freesendmsg" : true,
-            "discountcode" : false,
             "products" : [
                 {
                     "id" : 1,
