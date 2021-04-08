@@ -131,8 +131,8 @@ export default {
         },
         
         dltFunc(){
-            this.dltProduct = !this.dltProduct
-            this.$store.state.totalsum -= this.newprice
+            // this.dltProduct = !this.dltProduct
+            // this.$store.state.totalsum -= this.newprice
             this.$emit('dlt-event')
         },
     }

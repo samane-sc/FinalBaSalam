@@ -9,7 +9,7 @@
                 <span class="infoA">از غرفه: </span>
                 <span class="infoB">{{ item.vendorName }}</span>
             </div>
-
+            
             <!-- the name of user -->
             <div class="disFlex" style="margin-right: 15.9px;">
                 <img :src="item.profileImg" width="40" height="40" class="bioImg">
@@ -28,7 +28,7 @@
                 :new-price="data.price"
                 :crossed-price="data.price2"
                 :product-img="data.img" 
-                @dlt-event = "item.products.length -- " />
+                @dlt-event = "item.products.splice(index, 1)" />
 
             <!-- show the messages (ارسال رایگان) after each vendor -->
             <Msg :msg-vendor1="msgVendor1[indx]" :msg-vendor2="msgVendor2[indx]" />
