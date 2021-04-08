@@ -1,8 +1,7 @@
 <!-- this component is for the shopping basket and next shopping list -->
 <template>
 <div>
-    <!-- using  "<component :is >"   to define which button is clicked and if the button is clicked , 
-        the css class which named "active" is bind to that particular button to change the colour and border to pink -->
+    <!-- define which button is clicked and bind its css class to that particular button to change the colour and border to pink -->
     <div class="HeaderBtn">
         <button v-for="tab in tabs" :key="tab.index" @click=" currentTab = tab.componentName " 
         :class= "['button', { active : currentTab === tab.componentName }]">
@@ -12,7 +11,7 @@
              </p>
         </button>
     </div>
-    <!-- using "<keep alive>" to keep the "counter" of each product while changing between shopping-basket(سبد خرید) and next-shopping-list(ليست خريد بعدی) -->
+    <!-- keep the "counter" of each product while changing between shopping-basket(سبد خرید) and next-shopping-list(ليست خريد بعدی) -->
     <keep-alive>
         <component :is="currentTab" > </component>
     </keep-alive>
@@ -20,14 +19,20 @@
 </template>
 
 <script>
+
 import TheVendor from '@/components/page1/TheVendors';
 import Empty from '@/components/page1/NextShoppingList'
 
 export default {
+    components:{
+        TheVendor,
+        Empty
+    },
     data() {
         return{
             // the default button is "shopping-list (ليست خريد)"
             currentTab : "TheVendor",
+            // buttons
             tabs : [
                 {
                     btnName : "سبد خرید",
@@ -39,11 +44,7 @@ export default {
                 }
             ],
         }
-    },
-    components:{
-        TheVendor,
-        Empty
-    },
+    }
 }
 </script>
 

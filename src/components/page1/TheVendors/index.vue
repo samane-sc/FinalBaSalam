@@ -1,5 +1,6 @@
-<template>
 <!-- vendors -->
+<template>
+
 <!--name of vendors-->
 <div class="header">
     <div v-for="(item, indx) in items.vendors" :key="indx">
@@ -8,6 +9,7 @@
                 <span class="infoA">از غرفه: </span>
                 <span class="infoB">{{ item.vendorName }}</span>
             </div>
+
             <!-- the name of user -->
             <div class="disFlex" style="margin-right: 15.9px;">
                 <img :src="item.profileImg" width="40" height="40" class="bioImg">
@@ -19,13 +21,14 @@
                     </div>
                 </div>
             </div>
+
             <!-- show the products of each vendor -->
             <Product v-for="(data, index) in item.products" :key="index"
                 :product-name="data.name" 
                 :new-price="data.price"
                 :crossed-price="data.price2"
                 :product-img="data.img" 
-                @dlt-event = "item.products.splice(index, 1)" />
+                @dlt-event = "item.products.length -- " />
 
             <!-- show the messages (ارسال رایگان) after each vendor -->
             <Msg :msg-vendor1="msgVendor1[indx]" :msg-vendor2="msgVendor2[indx]" />

@@ -1,6 +1,7 @@
 <template>
 <div class="header">
     <div v-show="dltProduct">
+
         <!--products-->
         <div class="order">
             <img class="img" :src="ProductImg" width="82" height="82" >
@@ -14,6 +15,7 @@
                 </div>
             </div>
         </div>
+
         <!-- Functions of each product -->
         <div class="icons disFlex">
             <button class="iconbtn iconbtnmin" @click="minus" @mousedown="Speedminus(1000)" @mouseup="doneSpeedminus">
@@ -60,8 +62,12 @@ export default {
     },
     data(){
         return{
+            // count number of each product
             counter : 1,
+
+            // hide product => delete
             dltProduct : true,
+
             // button's image or button's icons
             image :{
                 rubbish : require('@/assets/photoes/rubbish basket.png'),
@@ -75,19 +81,23 @@ export default {
         newprice(){
             return this.NewPrice * this.counter
         },
+
         crossedprice(){
             return this.CrossedPrice * this.counter
-        }
+        },
     },
+
     mounted(){
         this.$store.state.totalsum += this.NewPrice
     },
+
     methods: {
         plus() {
             this.counter += 1;
             this.$store.state.totalcounter ++ ;
             this.$store.state.totalsum += this.NewPrice ;
         },
+
         minus() {
             if( this.counter > 1 ){
                 this.counter -= 1 ;
@@ -95,6 +105,7 @@ export default {
                 this.$store.state.totalsum -= this.NewPrice
             }
         },
+
         SpeedPlus(duration){
             this.output = 
             setTimeout(() => {
@@ -102,9 +113,11 @@ export default {
                 this.SpeedPlus(duration - 100);
             }, duration);
         },
+
         doneSpeedPlus(){
             clearTimeout(this.output);
         },
+
         Speedminus(duration){
             this.outputM =
             setTimeout(() => {
@@ -112,12 +125,14 @@ export default {
                 this.Speedminus(duration - 100)
             }, duration);
         },
+
         doneSpeedminus(){
             clearTimeout(this.outputM);
         },
+        
         dltFunc(){
-            // this.dltProduct = !this.dltProduct
-            // this.$store.state.totalsum -= this.newprice
+            this.dltProduct = !this.dltProduct
+            this.$store.state.totalsum -= this.newprice
             this.$emit('dlt-event')
         },
     }
