@@ -11,7 +11,13 @@ import TheHeader from '@/components/TheHeader'
 export default ({
   components: {
     TheHeader,
-  }
+  },
+  
+  // when the page created function called and variable "counter" added to each product with the value 1 
+  created(){
+    this.$store.dispatch('qtyVariable')
+    this.$store.dispatch('vendorPrice')
+  },
 })
 </script>
 

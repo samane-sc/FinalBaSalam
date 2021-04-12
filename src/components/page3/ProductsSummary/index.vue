@@ -1,6 +1,7 @@
 <template>
 <div>
-    <div v-for="(item, index) in items.vendors" :key="index">
+    <div v-for="(item, index) in fakedata.items.vendors" :key="index">
+      <div v-show="item.products.length">
         <div class="disFlex info">
             <span class="infoA">از غرفه: </span>
             <span class="infoB">{{ item.vendorName }}</span>
@@ -12,30 +13,30 @@
             <div class="disFlex disFlexCol">
                 <p class="orderName">{{ data.name }}</p>
                 <div class="disFlex" style=" margin-top: 8px;">
-                    <span class="number">۲ عدد</span>
-                    <del>{{ data.price2 }}</del>
+                    <span class="number">{{ data.counter }} عدد</span>
+                    <del>{{ data.price2 * data.counter }}</del>
                 </div>
                 <div class="orderCost" style="position: relative;">
-                    <pre> {{ data.price }} </pre>
+                    <pre> {{ data.price * data.counter }} </pre>
                     <p class="orderToman">توما</p>
                     <img src="@/assets/photoes/۲۳ هزار تومان.png" width="6.79px" height="7.27px" class="n">
                 </div>
             </div>
         </div>
+      </div>
     </div>
 </div>
 </template>
 
 <script>
-import fakeproduct from "../../../fakeproduct.json";
+
 export default {
 
-  data(){
-    return{
-      items : fakeproduct,
-    }
-  },
-
+    computed:{
+        fakedata(){
+            return this.$store.state
+        },
+    },
 }
 </script>
 
@@ -45,6 +46,7 @@ export default {
     color: #3E3E3E;
     font-family: iransans;
     font-size: 14px;  
+    background-color: #ffffff;
 }
 
 .infoA{
@@ -59,8 +61,11 @@ export default {
 .order{
     display: flex; 
     flex-direction: row; 
-    margin-right: 16px; 
-    margin-top: 15px;
+    height: 115px;
+    padding-right: 16px; 
+    padding-top: 15px;
+    background-color: #ffffff;
+    border-bottom: 1px solid #EEEEEE;
 }
 
 .orderName{

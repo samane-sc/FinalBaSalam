@@ -22,7 +22,7 @@
                             غرفه
                         </span>
                     </div>
-                    <pre>{{this.$store.state.totalsum}} توما</pre>   
+                    <pre>{{TotalPrice}} توما</pre>   
                     <img src="@/assets/photoes/۲۳ هزار تومان.png" width="6.79px" height="7.27px" class="productImg">
                 </div>
             </div>
@@ -36,9 +36,12 @@ export default ({
     computed:{
         NumVendors (){
             // get the number of vendors
-            return this.$store.getters.vendorNumber;
+            return this.$store.state.vendorNumber
+        },
+        TotalPrice(){
+            return this.$store.getters.TotalPrice ;
         }
-    }
+    },
 })
 </script>
 

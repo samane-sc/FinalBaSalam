@@ -27,7 +27,7 @@
 
             <!--3-->
             <div class="icon3">
-                <div class="icon-3">{{ SumOfOrders }}</div>
+                <div class="icon-3">{{ productCount }}</div>
             </div>
         </div>
 
@@ -57,10 +57,10 @@ export default({
         }
     },
     computed:{
-        SumOfOrders(){
-            return this.$store.getters.sumOfOrders;
+        productCount(){
+            return this.$store.getters.productCount;
         }
-    }
+    },
 })
 </script>
 

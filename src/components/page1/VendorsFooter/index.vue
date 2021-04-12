@@ -10,7 +10,7 @@
                 <div class="ProductSum">{{ProNum}}</div>
                 <div>کالا</div>      
             </div>
-            <pre>۷۵,۰۰۰ توما</pre>
+            <pre>{{VendorPrice}} توما</pre>
             <img src="@/assets/photoes/۲۳ هزار تومان.png" width="6.79px" height="7.27px" class="n">
         </div>
     </div>
@@ -21,7 +21,8 @@
 <script>
 export default {
     props:[
-        "ProNum"
+        "ProNum",
+        "VendorPrice"
     ],
 }
 </script>

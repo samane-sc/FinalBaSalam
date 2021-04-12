@@ -1,15 +1,13 @@
 <!-- vendors -->
 <template>
-
 <!--name of vendors-->
 <div class="header">
-    <div v-for="(item, indx) in items.vendors" :key="indx">
+    <div v-for="(item, indx) in fakedata" :key="indx">
         <div v-show="item.products.length">
             <div class="disFlex vendorName">
                 <span class="infoA">از غرفه: </span>
                 <span class="infoB">{{ item.vendorName }}</span>
             </div>
-            
             <!-- the name of user -->
             <div class="disFlex" style="margin-right: 15.9px;">
                 <img :src="item.profileImg" width="40" height="40" class="bioImg">
@@ -21,14 +19,17 @@
                     </div>
                 </div>
             </div>
-
             <!-- show the products of each vendor -->
             <Product v-for="(data, index) in item.products" :key="index"
                 :product-name="data.name" 
-                :new-price="data.price"
+                :product-price="data.price"
                 :crossed-price="data.price2"
                 :product-img="data.img" 
-                @dlt-event = "item.products.splice(index, 1)" />
+                :counter="data.counter"
+                :vendor-id="indx"
+                :product-id="index"
+                :pro-num="item.products.length"
+                @dlt-event = "item.products.splice(index, 1)"/>
 
             <!-- show the messages (ارسال رایگان) after each vendor -->
             <Msg :msg-vendor1="msgVendor1[indx]" :msg-vendor2="msgVendor2[indx]" />
@@ -37,14 +38,13 @@
             <DiscountCode :showcode="discountcode[indx]"/>
 
             <!-- show the footer (قیمت کل هر غرفه) of each vendor and send the number of products-->
-            <VendorsFooter :pro-num="item.products.length" />
+            <VendorsFooter :pro-num="item.products.length" :vendor-price="item.vendorPrice" />
         </div>
     </div>
 </div>
 </template>
 
 <script>
-import fakeproduct from "../../../fakeproduct.json";
 import Product from "@/components/page1/TheVendors/Product.vue";
 import VendorsFooter from "@/components/page1/VendorsFooter";
 import DiscountCode from "@/components/page1/DiscountCode";
@@ -59,9 +59,7 @@ export default {
     },
 
     data(){
-        return{
-            items : fakeproduct, 
-            
+        return{            
             //show  "هورا! ارسال از این غرفه برای شما رایگان شد" for the first Vendor which the vlue is true, and hide for the second one which th value is false
             msgVendor1 : [true, false],
             
@@ -72,14 +70,11 @@ export default {
             discountcode : [true, false]
         }
     },
-    // mounted(){
-    //     console.log(this.message);
-    // },
-    methods:{
-        dltFunction(){
-            
+    computed:{
+        fakedata(){
+            return this.$store.state.items.vendors
         }
-    }
+    },
 }
 </script>
 

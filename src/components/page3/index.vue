@@ -31,7 +31,7 @@ export default {
 
 <style>
 .header3{
-    height: 841px;
+    height: 400px;
     margin-top: 8px;
 }
 </style>

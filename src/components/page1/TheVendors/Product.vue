@@ -1,7 +1,6 @@
 <template>
 <div class="header">
-    <div v-show="dltProduct">
-
+    <div>
         <!--products-->
         <div class="order">
             <img class="img" :src="ProductImg" width="82" height="82" >
@@ -9,9 +8,9 @@
                 <p class="orderName">{{ ProductName }}</p>
                 <div class="orderCost" style="position: relative;">
                     <del class="CrossedPrice">{{ crossedprice }}</del>
-                    <pre class="NewPrice">{{ newprice }}</pre>
+                    <pre class="NewPrice">{{ TotalProductPrice }}</pre>
                     <p class="orderToman">توما</p>
-                    <img :src="image.n" width="6.79px" height="7.27px" class="n">
+                    <img src="@/assets/photoes/۲۳ هزار تومان.png" width="6.79px" height="7.27px" class="n">
                 </div>
             </div>
         </div>
@@ -19,14 +18,14 @@
         <!-- Functions of each product -->
         <div class="icons disFlex">
             <button class="iconbtn iconbtnmin" @click="minus" @mousedown="Speedminus(1000)" @mouseup="doneSpeedminus">
-                <img :src="image.minus" height="1.5px" width="12px" class="icon iconMinus">
+                <img src="@/assets/photoes/minus.png" height="1.5px" width="12px" class="icon iconMinus">
             </button>
             <input type="text" :value="counter" readonly>
             <button class="iconbtn iconbtnadd" @click="plus" @mousedown="SpeedPlus(1000)" @mouseup="doneSpeedPlus">
-                <img :src="image.plus" class="icon">
+                <img src="@/assets/photoes/plus.png" class="icon">
             </button>
             <button class="iconbtn iconbtnrub" @click="dltFunc">
-                <img :src="image.rubbish" class="icon">
+                <img src="@/assets/photoes/rubbish basket.png" class="icon">
             </button>
             <a href="#">
                 <div class="save">
@@ -39,7 +38,6 @@
 </template>
 
 <script>
-// import axios from "axios";
 
 export default {
     props: {
@@ -47,7 +45,7 @@ export default {
             type : String,
             required : true
         },
-        "NewPrice" :{
+        "ProductPrice" :{
             type :  Number,
            required : true
         },
@@ -59,55 +57,68 @@ export default {
             type : String,
             required :true
         },
+        "counter" :{
+           type :  Number,
+           required : true
+        },
+        "VendorId":{
+            type :  Number,
+           required : true
+        },
+        "ProductId":{
+            type :  Number,
+           required : true
+        },
+        "ProNum":{
+            type :  Number,
+           required : true
+        }
+        
     },
     data(){
         return{
-            // count number of each product
-            counter : 1,
-
-            // hide product => delete
-            dltProduct : true,
-
-            // button's image or button's icons
-            image :{
-                rubbish : require('@/assets/photoes/rubbish basket.png'),
-                n : require('@/assets/photoes/۲۳ هزار تومان.png'),
-                minus : require('@/assets/photoes/minus.png'),                
-                plus : require('@/assets/photoes/plus.png'),
-            },
+            // for speed plus and speed minus
+            PlusOutput : 0,
+            MinusOutput : 0
         }
     },
     computed:{
-        newprice(){
-            return this.NewPrice * this.counter
+        // computed property to show the price of each product while increasing or decreasing counter
+        TotalProductPrice(){
+            return  this.ProductPrice * this.counter
         },
 
+        // computed property to show the crossed_price of each product while increasing or decreasing counter
         crossedprice(){
             return this.CrossedPrice * this.counter
-        },
-    },
-
-    mounted(){
-        this.$store.state.totalsum += this.NewPrice
+        },   
     },
 
     methods: {
+        // plus function when user clicks on + to increase counter
         plus() {
-            this.counter += 1;
-            this.$store.state.totalcounter ++ ;
-            this.$store.state.totalsum += this.NewPrice ;
+            // increse counter of product
+            this.$store.state.items.vendors[this.VendorId].products[this.ProductId].counter += 1
+
+            // increse vendor price
+            this.$store.state.items.vendors[this.VendorId].vendorPrice += this.ProductPrice;
         },
 
+        // minus function when user clicks on - to decrease counter
         minus() {
-            if( this.counter > 1 ){
-                this.counter -= 1 ;
-                this.$store.state.totalcounter -- ;
-                this.$store.state.totalsum -= this.NewPrice
+            let counter = this.$store.state.items.vendors[this.VendorId].products[this.ProductId].counter
+            if( counter > 1 ){
+                // decrease counter of product
+                this.$store.state.items.vendors[this.VendorId].products[this.ProductId].counter -= 1
+
+                // decrease vendor price
+                this.$store.state.items.vendors[this.VendorId].vendorPrice -= this.ProductPrice;
             }
         },
 
+        // speed plus
         SpeedPlus(duration){
-            this.output = 
+            this.PlusOutput = 
             setTimeout(() => {
                 this.plus()
                 this.SpeedPlus(duration - 100);
@@ -115,11 +126,12 @@ export default {
         },
 
         doneSpeedPlus(){
-            clearTimeout(this.output);
+            clearTimeout(this.PlusOutput);
         },
 
+        // speed minus
         Speedminus(duration){
-            this.outputM =
+            this.MinusOutput =
             setTimeout(() => {
                 this.minus()
                 this.Speedminus(duration - 100)
@@ -127,24 +139,21 @@ export default {
         },
 
         doneSpeedminus(){
-            clearTimeout(this.outputM);
+            clearTimeout(this.MinusOutput);
         },
         
+        // delete dunction 
         dltFunc(){
-            // this.dltProduct = !this.dltProduct
-            // this.$store.state.totalsum -= this.newprice
-            this.$emit('dlt-event')
-        },
-    }
+            // using mapGetters to reduce the price of product which is deleted
+            this.$store.dispatch('dlt', this.ProNum) 
 
-    // Lifecycle hook
-    // mounted() {
-    // axios
-    //   .get("https://jsonplaceholder.typicode.com/todos")
-    //   .then((response) => (this.todos = response.data))
-    //   .catch((err) => console.error(err));
-    // },
-      
+            // delete product in parent file "index.js"
+            this.$emit('dlt-event')
+
+            // reduce vendor price while deleting a product
+            this.$store.state.items.vendors[this.VendorId].vendorPrice -= this.ProductPrice * this.counter;
+        },
+    }  
 }
 </script>
 

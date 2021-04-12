@@ -11,7 +11,7 @@
                     <div class="productCost">
                          مبلغ قابل پرداخت
                     </div>
-                    <pre class="productMoney">۷۵,۰۰۰ توما</pre>   
+                    <pre class="productMoney">{{TotalPrice}} توما</pre>   
                     <img src="@/assets/photoes/۲۳ هزار تومان.png" width="6.79px" height="7.27px" >
                 </div>
             </div>
@@ -21,7 +21,11 @@
 
 <script>
 export default {
-
+    computed:{
+        TotalPrice(){
+            return this.$store.getters.TotalPrice
+        }
+    }
 }
 </script>
 
@@ -59,7 +63,7 @@ a {
 img{
     position: absolute; 
     bottom: 23.73px; 
-    left: 4px;
+    left: 7px;
 }
 .productCost{
     margin-top: 16.78px; 
@@ -72,7 +76,7 @@ img{
 }
 
 .productMoney{
-    margin-right: 97px; 
+    margin-right: 80px; 
     font-weight: 700; 
     font-family: iransans;
     color: #535353; 
