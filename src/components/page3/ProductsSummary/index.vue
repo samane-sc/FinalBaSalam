@@ -1,7 +1,7 @@
 <template>
 <div>
     <div v-for="(item, index) in Vendor" :key="index">
-      <div>
+      <div v-show="item.product.length">
         <div class="disFlex info">
             <span class="infoA">از غرفه: </span>
             <span class="infoB">{{ item.vendor.title }}</span>
