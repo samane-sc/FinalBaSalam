@@ -1,4 +1,3 @@
-
 <template>
 <!-- this component is shown when we click on "next shopping list"(لیست خرید بعدی) -->
   <div>

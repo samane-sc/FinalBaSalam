@@ -18,7 +18,7 @@
             <!--btnsales-->
             <div class="btnsales2">
                 <button class="btnsales1">
-                    فروش در باسلام 
+                    فروش در باسلام
                 </button>
             </div>
 
@@ -27,7 +27,7 @@
 
             <!--3-->
             <div class="icon3">
-                <div class="icon-3">{{ productCount }}</div>
+                <div class="icon-3">{{ toFarsiNumber(this.$store.getters.ProductNumber) }}</div>
             </div>
         </div>
 
@@ -56,11 +56,16 @@ export default({
             }
         }
     },
-    computed:{
-        productCount(){
-            return this.$store.getters.productCount;
-        }
-    },
+    
+  methods:{
+    // FUNCTION FOR PERSIAN NUMBERS
+    toFarsiNumber(n){
+      const farsiDigits = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
+      return n
+        .toString()
+        .replace(/\d/g, x => farsiDigits[x]);
+    }
+  }
 })
 </script>
 

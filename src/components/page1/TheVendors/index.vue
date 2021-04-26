@@ -2,34 +2,36 @@
 <template>
 <!--name of vendors-->
 <div class="header">
-    <div v-for="(item, indx) in fakedata" :key="indx">
-        <div v-show="item.products.length">
+    <div v-for="(item, indx) in Vendor" :key="indx">
+        <div v-show="item.product.length">
             <div class="disFlex vendorName">
                 <span class="infoA">از غرفه: </span>
-                <span class="infoB">{{ item.vendorName }}</span>
+                <span class="infoB">{{ item.vendor.title }}</span>
             </div>
             <!-- the name of user -->
             <div class="disFlex" style="margin-right: 15.9px;">
-                <img :src="item.profileImg" width="40" height="40" class="bioImg">
+                <img v-if="item.vendor.owner.avatar.url==='#'" :src="default_img" width="40" height="40" class="bioImg">
+                <img v-else :src="item.vendor.owner.avatar.url || default_img " width="40" height="40" class="bioImg">
                 <div class="disFlex disFlexCol">
-                    <div class="bioName">{{ item.fullName }}</div>
+                    <div class="bioName">{{ item.vendor.owner.name }}</div>
                     <div class="disFlex">
                         <img src="@/assets/photoes/Vector.png" width="10.67px" height="13.32px" class="location">
-                        <div class="bioCity">از {{ item.cityName }}</div>
+                        <div class="bioCity">از {{ item.vendor.owner.city }}</div>
                     </div>
                 </div>
             </div>
             <!-- show the products of each vendor -->
-            <Product v-for="(data, index) in item.products" :key="index"
-                :product-name="data.name" 
+            <Product v-for="(data, index) in item.product" :key="index"
+                :product-name="data.title" 
                 :product-price="data.price"
-                :crossed-price="data.price2"
-                :product-img="data.img" 
+                :primary-price="data.primaryPrice" 
+                :product-img="data.pic"
                 :counter="data.counter"
-                :vendor-id="indx"
+                :stock="data.stock"
                 :product-id="index"
-                :pro-num="item.products.length"
-                @dlt-event = "item.products.splice(index, 1)"/>
+                :vendor-id="indx"
+                :pro-num="item.product.length"
+                @dlt-event = "item.product.splice(index, 1)"/>
 
             <!-- show the messages (ارسال رایگان) after each vendor -->
             <Msg :msg-vendor1="msgVendor1[indx]" :msg-vendor2="msgVendor2[indx]" />
@@ -38,7 +40,7 @@
             <DiscountCode :showcode="discountcode[indx]"/>
 
             <!-- show the footer (قیمت کل هر غرفه) of each vendor and send the number of products-->
-            <VendorsFooter :pro-num="item.products.length" :vendor-price="item.vendorPrice" />
+            <VendorsFooter :pro-num="item.product.length" :vendor-price="item.vendor.vendorPrice" />
         </div>
     </div>
 </div>
@@ -71,10 +73,22 @@ export default {
         }
     },
     computed:{
-        fakedata(){
-            return this.$store.state.items.vendors
+        default_img(){
+            return 'https://s16.picofile.com/file/8429278218/Ellipse_4.png'
+        },
+        Vendor(){
+            return this.$store.getters.Get_Vendor
         }
     },
+    methods:{
+    // FUNCTION FOR PERSIAN NUMBERS
+    toFarsiNumber(n){
+      const farsiDigits = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
+      return n
+        .toString()
+        .replace(/\d/g, x => farsiDigits[x]);
+    }
+  }
 }
 </script>
 

@@ -11,7 +11,7 @@
                     <div class="productCost">
                          مبلغ قابل پرداخت
                     </div>
-                    <pre class="productMoney">{{TotalPrice}} توما</pre>   
+                    <pre class="productMoney">{{toFarsiNumber(TotalPrice)}} توما</pre>   
                     <img src="@/assets/photoes/۲۳ هزار تومان.png" width="6.79px" height="7.27px" >
                 </div>
             </div>
@@ -25,7 +25,16 @@ export default {
         TotalPrice(){
             return this.$store.getters.TotalPrice
         }
+    },
+    methods:{
+    // FUNCTION FOR PERSIAN NUMBERS
+    toFarsiNumber(n){
+      const farsiDigits = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
+      return n
+        .toString()
+        .replace(/\d/g, x => farsiDigits[x]);
     }
+  }
 }
 </script>
 
@@ -63,7 +72,7 @@ a {
 img{
     position: absolute; 
     bottom: 23.73px; 
-    left: 7px;
+    left: 15px;
 }
 .productCost{
     margin-top: 16.78px; 

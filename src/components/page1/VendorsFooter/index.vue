@@ -7,10 +7,10 @@
         <div class="disFlex disFlexCol" style="position: relative;">
             <div class="disFlex productCost">
                 <div> جمع مبلغ برای</div>
-                <div class="ProductSum">{{ProNum}}</div>
+                <div class="ProductSum">{{this.$parent.toFarsiNumber(ProNum)}}</div>
                 <div>کالا</div>      
             </div>
-            <pre>{{VendorPrice}} توما</pre>
+            <pre>{{this.$parent.toFarsiNumber(VendorPrice)}} توما</pre>
             <img src="@/assets/photoes/۲۳ هزار تومان.png" width="6.79px" height="7.27px" class="n">
         </div>
     </div>
@@ -38,7 +38,7 @@ export default {
 .n{
     position: absolute; 
     bottom: 22.73px; 
-    left: 5px;
+    left: 14px;
 }
 
 button{
@@ -62,7 +62,7 @@ button{
 }
 
 pre{
-    margin-right: 97px; 
+    margin-right: 80px; 
     font-weight: 700; 
     font-family: iransans;
     color: #535353; 

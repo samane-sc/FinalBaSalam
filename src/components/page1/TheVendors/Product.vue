@@ -6,9 +6,10 @@
             <img class="img" :src="ProductImg" width="82" height="82" >
             <div class="disFlex disFlexCol">
                 <p class="orderName">{{ ProductName }}</p>
-                <div class="orderCost" style="position: relative;">
-                    <del class="CrossedPrice">{{ crossedprice }}</del>
-                    <pre class="NewPrice">{{ TotalProductPrice }}</pre>
+                <div v-if="stock === 0" class="orderCost">ناموجود</div>
+                <div v-else class="orderCost" style="position: relative;">
+                    <del class="CrossedPrice">{{ this.$parent.toFarsiNumber(this.PrimaryPrice * this.counter) }}</del>
+                    <pre class="NewPrice">{{ this.$parent.toFarsiNumber(this.ProductPrice * this.counter) }}</pre>
                     <p class="orderToman">توما</p>
                     <img src="@/assets/photoes/۲۳ هزار تومان.png" width="6.79px" height="7.27px" class="n">
                 </div>
@@ -46,73 +47,68 @@ export default {
             required : true
         },
         "ProductPrice" :{
-            type :  Number,
+            type :  String,
            required : true
         },
-        "CrossedPrice" :{
-            type : Number,
+        "PrimaryPrice" :{
+            type : String,
             required : true
         },
         "ProductImg" :{
-            type : String,
+            type : null,
+            default: 'https://s16.picofile.com/file/8429278542/image_1.png',
             required :true
         },
         "counter" :{
            type :  Number,
            required : true
         },
-        "VendorId":{
-            type :  Number,
-           required : true
+        "stock": {
+            type : Number,
+            required : true,
         },
         "ProductId":{
             type :  Number,
            required : true
-        },
+        },      
+        "VendorId":{
+            type :  Number,
+           required : true
+        },  
         "ProNum":{
             type :  Number,
            required : true
         }
-        
     },
     data(){
         return{
-            // for speed plus and speed minus
+            // variable for speed plus and speed minus
             PlusOutput : 0,
             MinusOutput : 0
         }
-    },
-    computed:{
-        // computed property to show the price of each product while increasing or decreasing counter
-        TotalProductPrice(){
-            return  this.ProductPrice * this.counter
-        },
-
-        // computed property to show the crossed_price of each product while increasing or decreasing counter
-        crossedprice(){
-            return this.CrossedPrice * this.counter
-        },   
     },
 
     methods: {
         // plus function when user clicks on + to increase counter
         plus() {
             // increse counter of product
-            this.$store.state.items.vendors[this.VendorId].products[this.ProductId].counter += 1
-
-            // increse vendor price
-            this.$store.state.items.vendors[this.VendorId].vendorPrice += this.ProductPrice;
+            if(this.stock > this.counter){
+                this.$store.state.array[this.VendorId].product[this.ProductId].counter += 1
+                
+                // increse vendor price
+                this.$store.state.array[this.VendorId].vendor.vendorPrice += +this.ProductPrice;
+            }
         },
 
         // minus function when user clicks on - to decrease counter
         minus() {
-            let counter = this.$store.state.items.vendors[this.VendorId].products[this.ProductId].counter
+            let counter = this.counter
             if( counter > 1 ){
                 // decrease counter of product
-                this.$store.state.items.vendors[this.VendorId].products[this.ProductId].counter -= 1
+                this.$store.state.array[this.VendorId].product[this.ProductId].counter -= 1
 
                 // decrease vendor price
-                this.$store.state.items.vendors[this.VendorId].vendorPrice -= this.ProductPrice;
+                this.$store.state.array[this.VendorId].vendor.vendorPrice -= +this.ProductPrice;
             }
         },
 
@@ -144,14 +140,14 @@ export default {
         
         // delete dunction 
         dltFunc(){
-            // using mapGetters to reduce the price of product which is deleted
+            // to change the number of vendors while all products of one vendor are deleted 
             this.$store.dispatch('dlt', this.ProNum) 
 
             // delete product in parent file "index.js"
             this.$emit('dlt-event')
 
             // reduce vendor price while deleting a product
-            this.$store.state.items.vendors[this.VendorId].vendorPrice -= this.ProductPrice * this.counter;
+            this.$store.state.array[this.VendorId].vendor.vendorPrice -= this.ProductPrice * this.counter;
         },
     }  
 }
@@ -178,7 +174,7 @@ export default {
     color: #535353; 
     font-size: 12px;
     padding-top: 30.67px;
-    margin-right: 143px; 
+    margin-right: 130px; 
 }
 
 .orderToman{

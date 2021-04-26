@@ -1,23 +1,23 @@
 <template>
 <div>
-    <div v-for="(item, index) in fakedata.items.vendors" :key="index">
-      <div v-show="item.products.length">
+    <div v-for="(item, index) in Vendor" :key="index">
+      <div>
         <div class="disFlex info">
             <span class="infoA">از غرفه: </span>
-            <span class="infoB">{{ item.vendorName }}</span>
+            <span class="infoB">{{ item.vendor.title }}</span>
         </div>
 
         <!--products-->
-        <div class="order" v-for="(data, index) in item.products" :key="index">
-            <img :src="data.img" width="82" height="82" >
+        <div class="order" v-for="(data, index) in item.product" :key="index" v-show="data.stock">
+            <img :src="data.pic || default_img " width="82" height="82" >
             <div class="disFlex disFlexCol">
-                <p class="orderName">{{ data.name }}</p>
+                <p class="orderName">{{ data.title }}</p>
                 <div class="disFlex" style=" margin-top: 8px;">
-                    <span class="number">{{ data.counter }} عدد</span>
-                    <del>{{ data.price2 * data.counter }}</del>
+                    <span class="number">{{ toFarsiNumber(data.counter) }} عدد</span>
+                    <del>{{ toFarsiNumber(data.primaryPrice * data.counter) }}</del>
                 </div>
                 <div class="orderCost" style="position: relative;">
-                    <pre> {{ data.price * data.counter }} </pre>
+                    <pre> {{ toFarsiNumber(data.price * data.counter) }} </pre>
                     <p class="orderToman">توما</p>
                     <img src="@/assets/photoes/۲۳ هزار تومان.png" width="6.79px" height="7.27px" class="n">
                 </div>
@@ -33,10 +33,22 @@
 export default {
 
     computed:{
-        fakedata(){
-            return this.$store.state
+        Vendor(){
+            return this.$store.getters.Get_Vendor
         },
+        default_img(){
+            return 'https://s16.picofile.com/file/8429278542/image_1.png'
+        }
     },
+    methods:{
+    // FUNCTION FOR PERSIAN NUMBERS
+    toFarsiNumber(n){
+      const farsiDigits = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
+      return n
+        .toString()
+        .replace(/\d/g, x => farsiDigits[x]);
+    }
+  }
 }
 </script>
 

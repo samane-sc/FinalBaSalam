@@ -14,9 +14,8 @@ export default ({
   },
   
   // when the page created function called and variable "counter" added to each product with the value 1 
-  created(){
-    this.$store.dispatch('qtyVariable')
-    this.$store.dispatch('vendorPrice')
+  async created(){
+    await this.$store.dispatch('GET_API')
   },
 })
 </script>

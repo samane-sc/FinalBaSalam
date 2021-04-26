@@ -6,7 +6,7 @@
                 <router-link to="/pageTwo">
                     <div class="disFlex btn">
                         <div>  ادامه خرید از </div>
-                        <div class="vendorsnum">{{NumVendors}}</div>
+                        <div class="vendorsnum">{{toFarsiNumber(NumVendors)}}</div>
                         <div>غرفه</div>
                     </div>
                 </router-link>
@@ -16,13 +16,13 @@
                             مبلغ قابل پرداخت 
                         </span>
                         <span class="vendorsnum">
-                            {{NumVendors}}
+                            {{toFarsiNumber(NumVendors)}}
                         </span>
                         <span>
                             غرفه
                         </span>
                     </div>
-                    <pre>{{TotalPrice}} توما</pre>   
+                    <pre>{{toFarsiNumber(TotalPrice)}} توما</pre>   
                     <img src="@/assets/photoes/۲۳ هزار تومان.png" width="6.79px" height="7.27px" class="productImg">
                 </div>
             </div>
@@ -42,6 +42,15 @@ export default ({
             return this.$store.getters.TotalPrice ;
         }
     },
+    methods:{
+    // FUNCTION FOR PERSIAN NUMBERS
+    toFarsiNumber(n){
+      const farsiDigits = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
+      return n
+        .toString()
+        .replace(/\d/g, x => farsiDigits[x]);
+    }
+  }
 })
 </script>
 
