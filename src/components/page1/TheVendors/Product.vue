@@ -147,7 +147,9 @@ export default {
             this.$emit('dlt-event')
 
             // reduce vendor price while deleting a product
-            this.$store.state.array[this.VendorId].vendor.vendorPrice -= this.ProductPrice * this.counter;
+            if(this.stock>=1){
+                this.$store.state.array[this.VendorId].vendor.vendorPrice -= this.ProductPrice * this.counter;
+            }
         },
     }  
 }
